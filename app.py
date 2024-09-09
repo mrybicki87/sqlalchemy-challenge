@@ -94,7 +94,7 @@ def temperature_list ():
 
 @app.route("/api/v1.0/<start>")
 def temp_start(start):
-    '''Fetch the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range'''
+    '''Fetch the minimum temperature, the average temperature, and the maximum temperature from a specified start date'''
     date = dt.datetime.strptime(start, '%Y%m%d').date()
     range = session.query(func.avg(Measurement.tobs).label("Average Temp"), func.min(Measurement.tobs).label("Minimum Temp"), func.max(Measurement.tobs).label("Max Temp")) .\
         filter(Measurement.date >=date).all()
@@ -108,6 +108,7 @@ def temp_start(start):
 
 @app.route("/api/v1.0/<start>/<end>")
 def temp_range(start, end):
+    '''Fetch the minimum temperature, the average temperature, and the maximum temperature for a specified start-end range'''
     start_date = dt.datetime.strptime(start, '%Y%m%d').date()
     end_date = dt.datetime.strptime(end, '%Y%m%d').date()
 
